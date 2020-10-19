@@ -1,0 +1,36 @@
+<h1>Project List </h1>
+<%if @projects.present?%>
+<table>
+  <thead>
+  <tr>
+    <th >Name</th>
+    <th >Description</th>
+    <th width="20%">Status</th>
+
+    <th width="20%">Assignee</th>
+    <th width="20%">Project Lead</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+
+  <% @projects.each do |project| %>
+      <tr>
+        <td><%= project.name %></td>
+        <td ><%= project.description %></td>
+        <td width="20%"><%= project.status %></td>
+        <td width="20%"><%= User.find(project.user_id).employee_name %></td>
+        <td width="20%"><%= User.find(project.project_lead_id).employee_name %></td>
+        <td><%= link_to 'Show', project %></td>
+        <td><%= link_to 'Edit', edit_project_path(project) %></td>
+        <td><%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+<%end%>
+<br>
+
+<%= link_to 'New Project', new_project_path %>
+

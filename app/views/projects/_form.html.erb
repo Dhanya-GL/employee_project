@@ -1,0 +1,40 @@
+<%= form_with(model: project, local: true) do |form| %>
+  <% if project.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(project.errors.count, "error") %> prohibited this item from being saved:</h2>
+
+      <ul>
+      <% project.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+    <div class="field">
+      <%= form.label :project_lead %>
+      <%=form.collection_select :project_lead_id, User.where(:role=>'Project Lead'), :id, :employee_name%>
+    </div>
+    <div class="field">
+      <%= form.label :status %>
+      <%= form.select :status, [ 'Not Started' ,'Started', 'In Progress','Dev Completed','Test Completed','Ready for UAT' ], :prompt => 'Select One' %>
+    </div>
+  <div class="field">
+      <%= form.label :assignee %>
+      <%=form.collection_select :user_id, User.where(:role=>'Team Member'), :id, :employee_name%>
+
+    </div>
+    <%#= form.hidden_field :user_id, value: @user.id%>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
